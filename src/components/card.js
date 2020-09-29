@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -15,13 +16,14 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Container } from "@material-ui/core";
 
 import { format, render, cancel, register } from "timeago.js";
+import PopUp from "../components/popup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 220,
-    display: "block",
+    height: "100%",
   },
   media: {
     height: 0,
@@ -37,6 +39,14 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
+  imageHolder: {
+    height: "auto",
+    paddingTop: "56.25%", // 16:9
+    position: "relative",
+  },
+  imageLink: {
+    padding: "10px",
+  },
   avatar: {
     backgroundColor: red[500],
   },
@@ -45,14 +55,18 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
 
-  return (
-    <Card className={classes.root}>
+  const [pop, setPopup] = useState(false);
+
+  const openPopUp = () => {
+    setPopup(true);
+    console.log(props.productName);
+  };
+
+  return !pop ? (
+    <Card className={classes.root} onClick={openPopUp}>
       <CardHeader title={props.productName} subheader={props.productCatagory} />
-      <CardMedia
-        className={classes.media}
-        image={props.imageLink}
-        title={props.productName}
-      />
+
+      <CardMedia className={classes.imageHolder} image={props.imageLink} />
       <CardHeader subheader={format(props.time)} />
 
       <CardContent>
@@ -63,5 +77,7 @@ export default function RecipeReviewCard(props) {
         <Typography variant="body2">{props.description}</Typography>
       </CardContent>
     </Card>
+  ) : (
+    <PopUp />
   );
 }

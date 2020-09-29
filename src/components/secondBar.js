@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   tab: {},
 }));
 
-const HorizantalTabs = (props) => {
+const SecondBar = (props) => {
   const { match, history } = props;
   const { params } = match;
   const { page } = params;
@@ -87,4 +87,4 @@ const HorizantalTabs = (props) => {
   );
 };
 
-export default HorizantalTabs;
+export default SecondBar;

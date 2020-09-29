@@ -4,7 +4,7 @@ import { Redirect, BrowserRouter, Route, Switch } from "react-router-dom";
 import Navbar from "../components/navbar";
 import AddProduct from "./addproduct";
 
-import HorizantalTabs from "../components/secondBar";
+import SecondBar from "../components/secondBar";
 
 function Profile(props) {
   const [uid, setUid] = useState("");
@@ -42,7 +42,7 @@ function Profile(props) {
       <Route
         exact
         path="/profile/:page?"
-        render={(props) => <HorizantalTabs {...props} />}
+        render={(props) => <SecondBar {...props} />}
       />
     </Switch>
   ) : (
