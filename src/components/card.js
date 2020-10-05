@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -20,6 +20,11 @@ import { Container } from "@material-ui/core";
 
 import { format, render, cancel, register } from "timeago.js";
 import PopUp from "../components/popup";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,29 +60,51 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
 
-  const [pop, setPopup] = useState(false);
+  const [popup, setPopup] = useState(false);
 
-  const openPopUp = () => {
-    setPopup(true);
-    console.log(props.productName);
-  };
+  useEffect(() => {}, []);
 
-  return !pop ? (
-    <Card className={classes.root} onClick={openPopUp}>
-      <CardHeader title={props.productName} subheader={props.productCatagory} />
+  return (
+    <>
+      <Card
+        className={classes.root}
+        onClick={() => {
+          setPopup(true);
+        }}
+      >
+        <CardHeader
+          title={props.productName}
+          subheader={props.productCatagory}
+        />
 
-      <CardMedia className={classes.imageHolder} image={props.imageLink} />
-      <CardHeader subheader={format(props.time)} />
+        <CardMedia className={classes.imageHolder} image={props.imageLink} />
+        <CardHeader subheader={format(props.time)} />
 
-      <CardContent>
-        <Typography variant="body1" color="textSecondary" component="p">
-          Product Code:{props.productCode}
-        </Typography>
-        <br />
-        <Typography variant="body2">{props.description}</Typography>
-      </CardContent>
-    </Card>
-  ) : (
-    <PopUp />
+        <CardContent>
+          <Typography variant="body1" color="textSecondary" component="p">
+            Product Code:{props.productCode}
+          </Typography>
+          <br />
+          <Typography variant="body2">{props.description}</Typography>
+        </CardContent>
+      </Card>
+
+      <Modal
+        isOpen={popup}
+        onRequestClose={() => {
+          setPopup(false);
+        }}
+        style={{
+          overlay: {
+            backgroundColor: "grey",
+          },
+          content: {
+            color: "grey",
+          },
+        }}
+      >
+        <PopUp value={props} />
+      </Modal>
+    </>
   );
 }

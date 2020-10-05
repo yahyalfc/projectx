@@ -1,5 +1,6 @@
 //packages
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Switch, BrowserRouter, Route, Link } from "react-router-dom";
 
 import "./App.css";
@@ -15,8 +16,6 @@ import About from "./pages/about";
 import SignIn from "./pages/signin";
 import SignUp from "./pages/signup";
 import Profile from "./pages/profile";
-
-import AddProduct from "./pages/addproduct";
 
 function App() {
   return (
